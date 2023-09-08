@@ -1,0 +1,112 @@
+-- 1. how many employees are there in each department?
+SELECT COUNT(*) AS number_of_employee,Department
+FROM Employee_Sample_Data
+GROUP BY Department
+ORDER BY number_of_employee;
+
+-- 2. What is the average age of employees in the Sales department?
+SELECT AVG(Age) AS average_employee_age
+FROM Employee_Sample_Data
+WHERE Department = 'Sales';
+
+-- 3. Who are the top 5 highest-paid employees in the company?
+SELECT TOP 5 Full_Name,Job_Title,Department,Annual_Salary
+FROM Employee_Sample_Data
+ORDER BY Annual_Salary DESC;
+
+-- 4.What is the distribution of employees across different genders and ethnicities?
+SELECT COUNT(*) AS number_of_employees, Gender, Ethnicity
+FROM Employee_Sample_Data
+GROUP BY Gender, Ethnicity
+ORDER BY Ethnicity;
+
+-- 5. How has the average salary changed over the years?
+SELECT AVG(Annual_Salary) AS average_salary, YEAR(Hire_Date) AS Year 
+FROM Employee_Sample_Data
+GROUP BY YEAR(Hire_Date)
+ORDER BY YEAR(Hire_Date);
+
+-- 6. Which department has the highest average bonus percentage?
+
+-- I had to change the data type of the bonus column
+UPDATE Employee_Sample_Data
+SET Bonus = REPLACE(bonus,'%','.00');
+
+SELECT Department,ROUND(AVG(CAST(Bonus AS float)),2) AS average_bonus_percentage
+FROM Employee_Sample_Data
+GROUP BY Department
+ORDER BY AVG(CAST(Bonus AS float)) DESC;
+
+-- 7. Identify employees who exited the company within their first year.
+SELECT Full_Name,Department,Annual_Salary
+FROM Employee_Sample_Data
+WHERE YEAR(Hire_Date) = YEAR(Exit_Date);
+
+-- 8. Calculate the total annual salary expenditure for each business unit.
+SELECT Business_Unit,SUM(Annual_Salary) AS total_annual_salary
+FROM Employee_Sample_Data
+GROUP BY Business_Unit
+ORDER BY total_annual_salary;
+
+-- 9. What is the average age of employees in each city?
+SELECT City, AVG(Age) AS Average_age_of_employees
+FROM Employee_Sample_Data
+GROUP BY City
+ORDER BY Average_age_of_employees;
+
+-- 10. Determine the average salary for each job title.
+SELECT Job_Title, AVG(Annual_Salary) AS Average_annual_salary
+FROM Employee_Sample_Data
+GROUP BY Job_Title
+ORDER BY Average_annual_salary DESC;
+
+-- 11. Compare the average bonus percentage between different departments.
+SELECT Department, ROUND(AVG(CAST(Bonus AS FLOAT)),2) AS Average_percentage_bonus
+FROM Employee_Sample_Data
+GROUP BY Department
+ORDER BY Average_percentage_bonus;
+
+-- 12. How many employees have left the company and what is the average tenure?
+SELECT COUNT(*) AS past_employees
+FROM Employee_Sample_Data
+WHERE Exit_Date IS NOT NULL;
+
+-- the average tenure in days
+SELECT AVG(DATEDIFF(day,Hire_Date,Exit_Date)) AS Average_tenure_in_days
+FROM Employee_Sample_Data
+WHERE Exit_Date IS NOT NULL;
+
+-- the average tenure in months
+SELECT AVG(DATEDIFF(month,Hire_Date,Exit_Date)) AS Average_tenure_in_months
+FROM Employee_Sample_Data
+WHERE Exit_Date IS NOT NULL;
+
+-- the average tenure in years
+SELECT AVG(DATEDIFF(year,Hire_Date,Exit_Date)) AS Average_tenure_in_years
+FROM Employee_Sample_Data
+WHERE Exit_Date IS NOT NULL;
+
+-- 13. Identify employees who have been with the company for more than 10 years.
+SELECT Full_Name,Job_Title,Department,Annual_Salary,Bonus
+FROM Employee_Sample_Data
+WHERE DATEDIFF(year, Hire_Date,Exit_Date) > 10;
+
+-- 14. Calculate the average bonus percentage for employees under the age of 30.
+SELECT AVG(CAST(Bonus AS FLOAT)) AS Average_percentage_bonus_for_under_30_employees
+FROM Employee_Sample_Data
+WHERE Age < 30;
+
+-- 15. Compare the distribution of bonus percentage across different ethnicities.
+SELECT Ethnicity, ROUND(AVG(CAST(Bonus AS FLOAT)),2) AS Average_percentage_bonus
+FROM Employee_Sample_Data
+GROUP BY Ethnicity
+ORDER BY Average_percentage_bonus;
+
+
+
+
+
+
+
+
+
