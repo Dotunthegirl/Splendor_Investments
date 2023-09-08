@@ -1,4 +1,4 @@
--- 1. how many employees are there in each department?
+-- 1. How many employees are there in each department?
 SELECT COUNT(*) AS number_of_employee,Department
 FROM Employee_Sample_Data
 GROUP BY Department
@@ -14,7 +14,7 @@ SELECT TOP 5 Full_Name,Job_Title,Department,Annual_Salary
 FROM Employee_Sample_Data
 ORDER BY Annual_Salary DESC;
 
--- 4.What is the distribution of employees across different genders and ethnicities?
+-- 4. What is the distribution of employees across different genders and ethnicities?
 SELECT COUNT(*) AS number_of_employees, Gender, Ethnicity
 FROM Employee_Sample_Data
 GROUP BY Gender, Ethnicity
